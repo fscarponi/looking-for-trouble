@@ -2,3 +2,7 @@ local.properties
 
 # Project exclude paths
 /.gradle/
+
+.idea
+
+*.iml
