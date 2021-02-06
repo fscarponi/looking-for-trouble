@@ -24,7 +24,10 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
     implementation("com.github.lamba92", "telegrambots-ktx", telegrambotsktxversion)
-    implementation("org.kodein.di", "kodein-di", kodeinVersion)
+    api("org.kodein.di", "kodein-di", kodeinVersion)
+//    implementation("org.slf4j","slf4j-api","1.7.25")
+
+
 }
 
 tasks.test {
