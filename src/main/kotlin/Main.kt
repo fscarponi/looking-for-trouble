@@ -1,62 +1,58 @@
-import com.github.lamba92.telegrambots.extensions.KApiContextInitializer
-import com.github.lamba92.telegrambots.extensions.buildPollingBot
+import com.github.lamba92.kotlingram.*
+import com.github.lamba92.kotlingram.api.generated.InlineQueryResultPhoto
+import com.github.lamba92.kotlingram.api.generated.getMe
+import com.github.lamba92.kotlingram.builder.buildPollingBot
+import com.github.lamba92.kotlingram.builder.respond
+import com.github.lamba92.kotlingram.builder.respondPhoto
+import com.github.lamba92.kotlingram.builder.respondText
+import io.ktor.client.engine.cio.*
+import kotlinx.coroutines.coroutineScope
 
 
-fun main() {
-    // this will start the bot!
-    println("Configurazione del bot in corso...")
-    val bot = buildPollingBot {
+val customMessage = buildString {
+    append(System.getProperty("java.vm.name"))
+    append(", version ")
+    append(System.getProperty("java.vm.version"))
+}
+val media = "https://www.tc-web.it/wp-content/uploads/2019/01/java.jpg"
 
-        // customize those 2 and do not publish the token!
-        botApiToken = System.getenv("LFT_BOT_API_TOKEN")
-        botUsername = "LookingForTroubleBot"
+@ExperimentalStdlibApi
+suspend fun main(): Unit = coroutineScope{
 
-        kodein { // Kodein.MainBuilder
-            // kodein bindings
-        }
-        underlyingBot { // TelegramLongPollingBot
-            // here the underlying bot is exposed
-            options { //DefaultBotOptions
-                // Edit here the underlying bot
-                // initialization options
-            }
+    buildPollingBot {
+
+        options {
+            botApiToken = System.getenv("LFT_BOT_API_TOKEN")
+            botUsername = "LookingForTroubleBot"
         }
 
         handlers {
-
-            // this lambda is executed every time an inline
-            // query is received
+            messages {
+                respondPhoto(
+                    photo = media,
+                    caption = "Hi, i'm Kotlingram JVM test bot",
+                    replyToMessageId = message.messageId
+                )
+                respondText("You wrote to me \"${message.text}\", my message is $customMessage")
+//                val me = api.getMe().response
+            }
             inlineQueries {
 
-                // the respond method will send a response
-                // to the user that made the request
-                respond(emptyList()) { // InlineQueryResultSettings
-
+                val responses = buildList {
+                    repeat(10) { index ->
+                        add(
+                            InlineQueryResultPhoto(
+                                id = "response#$index",
+                                title = "Inline response #$index",
+                                type = "photo",
+                                photoUrl = media,
+                                thumbUrl = media
+                            )
+                        )
+                    }
                 }
-            }
-
-            // this lambda is executed every time a message
-            // is received
-            messages {
-                val receivedMessage=this.message
-                // elaborate the data for your response here
-
-                // the respond method will send a response
-                // to the user that made the request
-                respond { // SendMessage
-                    // Configure your response here
-                    text=receivedMessage.text
-                }
+                respond(responses)
             }
         }
-
     }
-    println("avvio il bot...")
-
-    val botSession = KApiContextInitializer {
-       registerBot(bot)
-    }
-    println("bot avviato")
-
-
 }

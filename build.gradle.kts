@@ -20,15 +20,23 @@ dependencies {
     val telegrambotsktxversion: String by project
     val kodeinVersion: String by project
     val logbackVersion: String by project
+    val ktor_version: String by project
+
+    implementation(kotlin("stdlib"))
+
+    implementation("com.github.lamba92:kotlingram-core:$telegrambotsktxversion")
+    implementation("com.github.lamba92:kotlingram-bot-builder:$telegrambotsktxversion")
+
+    implementation("io.ktor:ktor-server-core:$ktor_version")
+    implementation ("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
+
+    api("org.kodein.di", "kodein-di", kodeinVersion)
+    api("ch.qos.logback", "logback-classic", logbackVersion)
 
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
-    implementation("com.github.lamba92", "telegrambots-ktx", telegrambotsktxversion)
-    api("org.kodein.di", "kodein-di", kodeinVersion)
-    api("ch.qos.logback", "logback-classic", logbackVersion)
-
-
 
 }
 
