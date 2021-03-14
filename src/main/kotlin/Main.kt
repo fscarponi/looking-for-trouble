@@ -1,4 +1,5 @@
 import com.github.lamba92.kotlingram.api.generated.InlineQueryResultPhoto
+import com.github.lamba92.kotlingram.api.generated.getMe
 import com.github.lamba92.kotlingram.builder.buildPollingBot
 import com.github.lamba92.kotlingram.builder.respond
 import com.github.lamba92.kotlingram.builder.respondPhoto
