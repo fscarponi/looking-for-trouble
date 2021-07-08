@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.4.30"
     application
-    `maven-publish`
 }
 
 group = "com.github.fscarponi"
@@ -11,8 +10,10 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    jcenter()
-    maven("https://dl.bintray.com/lamba92/com.github.lamba92")
+}
+
+application{
+    mainClass.set("MainKt")
 }
 
 dependencies {
@@ -29,7 +30,7 @@ dependencies {
 
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation ("io.ktor:ktor-client-cio:$ktor_version")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
+
 
     api("org.kodein.di", "kodein-di", kodeinVersion)
     api("ch.qos.logback", "logback-classic", logbackVersion)
