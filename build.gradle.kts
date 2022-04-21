@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.30"
+    kotlin("jvm") version "1.6.10"
     application
 }
 
@@ -18,18 +18,17 @@ application{
 
 dependencies {
 
-    val telegrambotsktxversion: String by project
+    val telegramBotDSLVersion: String by project
     val kodeinVersion: String by project
     val logbackVersion: String by project
-    val ktor_version: String by project
+    val ktorVersion: String by project
 
     implementation(kotlin("stdlib"))
 
-    implementation("com.github.lamba92:kotlingram-core:$telegrambotsktxversion")
-    implementation("com.github.lamba92:kotlingram-bot-builder:$telegrambotsktxversion")
+    implementation("dev.inmo:tgbotapi:$telegramBotDSLVersion")
 
-    implementation("io.ktor:ktor-server-core:$ktor_version")
-    implementation ("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-server-core:$ktorVersion")
+    implementation ("io.ktor:ktor-client-cio:$ktorVersion")
 
 
     api("org.kodein.di", "kodein-di", kodeinVersion)
